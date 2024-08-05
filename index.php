@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div id="alert"></div>
                         <div id="response"></div>
-                        <table class="table table-bordered m-0">
+                        <!-- <table class="table table-bordered m-0">
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
@@ -54,9 +54,9 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
 
-                        <div class="alert alert-info m-0">No record found!</div>
+                        <!-- <div class="alert alert-info m-0">No record found!</div> -->
                     </div>
                 </div>
             </div>
