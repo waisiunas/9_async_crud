@@ -70,7 +70,7 @@ async function showUsers() {
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal" onclick="editUser(${user.id})">
                                             Edit
                                         </button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="deleteUser(${user.id})">
                                             Delete
                                         </button>
                                     </td>
@@ -164,9 +164,51 @@ editFormElement.addEventListener("submit", async function (e) {
         } else {
             editAlertElement.innerHTML = alertMaker();
         }
-        
+
     }
 });
+
+function deleteUser(id) {
+    outerID = id;
+}
+
+const deleteFormElement = document.querySelector("#delete-form");
+
+deleteFormElement.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const data = {
+        id: outerID
+    };
+
+    const response = await fetch('./api/delete-user.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    const alertElement = document.querySelector("#alert");
+
+    if (result.success) {
+        alertElement.innerHTML = alertMaker(result.success, 'success');
+        showUsers();
+        closeDeleteModal();
+    } else if (result.failure) {
+        alertElement.innerHTML = alertMaker(result.failure);
+    } else {
+        alertElement.innerHTML = alertMaker();
+    }
+
+});
+
+function closeDeleteModal() {
+    const modalElement = document.querySelector('#deleteUserModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+
+    if (modal) {
+        modal.hide();
+    }
+}
 
 function alertMaker(msg = "Something went wrong!", cls = "danger") {
     return `<div class="alert alert-${cls} alert-dismissible fade show" role="alert">
